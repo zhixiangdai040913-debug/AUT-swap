@@ -1,20 +1,25 @@
 import SwiftUI
 
-// MARK: - AUT Swap Home (post sign-in)
-
 struct HomeView: View {
     let userEmail: String
+    @ObservedObject var cart: CartStore
+    @ObservedObject var listingStore: ListingStore
+    @ObservedObject var messageStore: MessageStore
     var onLogout: () -> Void
 
-    @State private var searchText: String = ""
-    @State private var selectedCampus: Campus = CampusStorage.load()
+    @State private var searchText = ""
+    @State private var selectedFeedTab: HomeFeedTab = .recommended
+    @State private var categorySort: CategorySortOption = .campus
+    @State private var preferredCampus: Campus = CampusStorage.load()
     @State private var filterCampuses: Set<Campus> = FilterStorage.loadCampuses()
     @State private var filterCategories: Set<ListingCategory> = FilterStorage.loadCategories()
     @State private var filterTradeTypes: Set<TradeType> = FilterStorage.loadTradeTypes()
-    @State private var selectedSort: SortOption = .latestFirst
+    @State private var showFilterPanel = false
     @State private var selectedTab: MainTab = .home
-    @State private var bannerIndex: Int = 0
-    @State private var showFilterPanel: Bool = false
+    @State private var selectedListing: ListingItem?
+    @State private var sellerProfileEmail: String?
+    @State private var sellerProfileName: String?
+    @State private var selectedConversationId: String?
 
     private var hasActiveFilters: Bool {
         filterCampuses.count != 1
@@ -22,34 +27,197 @@ struct HomeView: View {
             || !filterTradeTypes.isEmpty
     }
 
+    private var displayListings: [ListingItem] {
+        var items = listingStore.listings(for: selectedFeedTab, search: searchText)
+        items = listingStore.applyFilters(
+            items,
+            campuses: filterCampuses,
+            categories: filterCategories,
+            tradeTypes: filterTradeTypes
+        )
+        return listingStore.sorted(items, by: categorySort, preferredCampus: preferredCampus)
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            if selectedTab == .home {
-                homeContent
-            } else {
-                placeholderTab
+            switch selectedTab {
+            case .home:
+                homeFeed
+            case .cart:
+                CartView(
+                    cart: cart,
+                    listingStore: listingStore,
+                    onBrowse: { selectedTab = .home },
+                    onContactSellers: contactCartSellers
+                )
+            case .messages:
+                MessagesView(
+                    messageStore: messageStore,
+                    selectedConversationId: $selectedConversationId
+                )
+            case .post:
+                PostListingView(
+                    listingStore: listingStore,
+                    sellerName: ProfileStorage.loadDisplayName(for: userEmail)
+                        ?? ProfileView.nameFromEmail(userEmail),
+                    sellerEmail: userEmail,
+                    onPublished: { selectedTab = .home }
+                )
+            case .profile:
+                ProfileView(
+                    userEmail: userEmail,
+                    listingStore: listingStore,
+                    cart: cart,
+                    messageStore: messageStore,
+                    onLogout: onLogout,
+                    onBrowse: { selectedTab = .home },
+                    onPost: { selectedTab = .post },
+                    onOpenMessages: { selectedTab = .messages },
+                    onSelectListing: { item in selectedListing = item }
+                )
             }
 
-            MainTabBar(selectedTab: $selectedTab) { tab in
-                handleTabSelect(tab)
+            MainTabBar(
+                selectedTab: $selectedTab,
+                cartCount: cart.count,
+                messageUnreadCount: messageStore.unreadTotal
+            ) { tab in
+                if tab != .home { showFilterPanel = false }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(SwapTheme.background)
+        .sheet(item: $selectedListing) { listing in
+            ListingDetailView(
+                item: listing,
+                cart: cart,
+                onContactSeller: {
+                    openChat(with: listing)
+                },
+                onViewSellerProfile: {
+                    sellerProfileEmail = listing.sellerEmail
+                    sellerProfileName = listing.sellerName
+                },
+                onClose: { selectedListing = nil }
+            )
+        }
+        .sheet(isPresented: Binding(
+            get: { sellerProfileEmail != nil },
+            set: { if !$0 { sellerProfileEmail = nil; sellerProfileName = nil } }
+        )) {
+            if let email = sellerProfileEmail, let name = sellerProfileName {
+                SellerProfileView(
+                    sellerEmail: email,
+                    sellerName: name,
+                    listingStore: listingStore,
+                    cart: cart,
+                    onClose: { sellerProfileEmail = nil; sellerProfileName = nil },
+                    onSelectListing: { item in
+                        sellerProfileEmail = nil
+                        sellerProfileName = nil
+                        selectedListing = item
+                    },
+                    onMessageSeller: {
+                        let listing = listingStore.listingsBySeller(email).first
+                        let id = messageStore.startConversation(
+                            withSellerName: name,
+                            sellerEmail: email,
+                            listing: listing,
+                            openingNote: "Hi \(name.split(separator: " ").first.map(String.init) ?? name) — I'd like to chat about your listings."
+                        )
+                        sellerProfileEmail = nil
+                        sellerProfileName = nil
+                        selectedConversationId = id
+                        selectedTab = .messages
+                    }
+                )
+            }
+        }
     }
 
-    private var homeContent: some View {
+    private var homeFeed: some View {
         GeometryReader { geometry in
             HStack(spacing: 0) {
-                mainHomeColumn
-                    .frame(width: showFilterPanel ? geometry.size.width * 2.0 / 3.0 : geometry.size.width)
+                VStack(spacing: 0) {
+                    HomeTopBar(
+                        hasActiveFilters: hasActiveFilters,
+                        cartCount: cart.count,
+                        onFilter: { showFilterPanel.toggle() },
+                        onCart: { selectedTab = .cart },
+                        onProfile: { selectedTab = .profile }
+                    )
+
+                    ActiveFilterChipsBar(
+                        campuses: filterCampuses,
+                        categories: filterCategories,
+                        tradeTypes: filterTradeTypes,
+                        onRemoveCampus: { campus in
+                            filterCampuses.remove(campus)
+                            if filterCampuses.isEmpty {
+                                filterCampuses = [preferredCampus]
+                            }
+                            persistFilters()
+                        },
+                        onRemoveCategory: { category in
+                            filterCategories.remove(category)
+                            persistFilters()
+                        },
+                        onRemoveTradeType: { type in
+                            filterTradeTypes.remove(type)
+                            persistFilters()
+                        }
+                    )
+
+                    HomeSearchBar(searchText: $searchText)
+
+                    FeedCategoryTabBar(selectedTab: $selectedFeedTab)
+
+                    CategorySortBar(selectedSort: $categorySort)
+
+                    HStack(spacing: 8) {
+                        Text("Campus priority:")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        ForEach(Campus.allCases) { campus in
+                            Button(action: {
+                                preferredCampus = campus
+                                CampusStorage.save(campus)
+                            }) {
+                                Text(campus.rawValue)
+                                    .font(.caption)
+                                    .fontWeight(preferredCampus == campus ? .semibold : .regular)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 4)
+                                    .background(preferredCampus == campus ? SwapTheme.orange : Color(white: 0.94))
+                                    .foregroundColor(preferredCampus == campus ? .white : .primary)
+                                    .cornerRadius(12)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 4)
+
+                    ScrollView {
+                        if displayListings.isEmpty {
+                            NoResultsView()
+                        } else {
+                            ProductGridView(items: displayListings, cart: cart) { item in
+                                selectedListing = item
+                            }
+                        }
+                    }
+                }
+                .frame(width: showFilterPanel ? geometry.size.width * 2.0 / 3.0 : geometry.size.width)
 
                 if showFilterPanel {
                     FilterPanelView(
                         selectedCampuses: $filterCampuses,
                         selectedCategories: $filterCategories,
                         selectedTradeTypes: $filterTradeTypes,
-                        resultCount: filteredListings.count,
+                        listings: listingStore.allListings,
+                        resultCount: displayListings.count,
                         onClose: { showFilterPanel = false },
                         onClearAll: clearAllFilters,
                         onToggleCampus: toggleCampus,
@@ -62,139 +230,38 @@ struct HomeView: View {
         }
     }
 
-    private var mainHomeColumn: some View {
-        VStack(spacing: 0) {
-            HomeTopBar(
-                hasActiveFilters: hasActiveFilters,
-                onFilter: { showFilterPanel.toggle() },
-                onNotifications: { /* TODO: FR5 */ },
-                onProfile: { /* TODO: FR6 */ }
-            )
-
-            ActiveFilterChipsBar(
-                campuses: filterCampuses,
-                categories: filterCategories,
-                tradeTypes: filterTradeTypes,
-                onRemoveCampus: { campus in
-                    filterCampuses.remove(campus)
-                    if filterCampuses.isEmpty {
-                        filterCampuses = [selectedCampus]
-                    }
-                    syncSelectedCampusFromFilters()
-                    persistFilters()
-                },
-                onRemoveCategory: { category in
-                    filterCategories.remove(category)
-                    persistFilters()
-                },
-                onRemoveTradeType: { type in
-                    filterTradeTypes.remove(type)
-                    persistFilters()
-                }
-            )
-
-            ScrollView {
-                VStack(spacing: 14) {
-                    HomeSearchBar(searchText: $searchText)
-
-                    CampusPickerBar(
-                        activeCampuses: filterCampuses,
-                        selectedCampus: $selectedCampus,
-                        onCampusChange: { campus in
-                            filterCampuses = [campus]
-                            CampusStorage.save(campus)
-                            persistFilters()
-                        }
-                    )
-
-                    CategoryScrollBar(
-                        selectedCategory: singleCategoryBinding,
-                        onCategoryTap: { category in
-                            if let category = category {
-                                toggleCategory(category)
-                            } else {
-                                filterCategories.removeAll()
-                                persistFilters()
-                            }
-                        }
-                    )
-
-                    PromoBannerView(
-                        title: MockData.promoBanners[bannerIndex].title,
-                        subtitle: MockData.promoBanners[bannerIndex].subtitle
-                    )
-                    .onTapGesture {
-                        bannerIndex = (bannerIndex + 1) % MockData.promoBanners.count
-                    }
-
-                    SortBar(
-                        selectedSort: $selectedSort,
-                        onSortChange: { _ in }
-                    )
-
-                    if filteredListings.isEmpty {
-                        NoResultsView()
-                    } else {
-                        ProductGridView(items: filteredListings) { _ in
-                            /* TODO: FR5 chat */
-                        }
-                    }
-                }
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-            }
-        }
-    }
-
-    /// Sync horizontal category bar when exactly one category is selected in the filter set.
-    private var singleCategoryBinding: Binding<ListingCategory?> {
-        Binding(
-            get: {
-                filterCategories.count == 1 ? filterCategories.first : nil
-            },
-            set: { newValue in
-                if let category = newValue {
-                    filterCategories = [category]
-                } else {
-                    filterCategories.removeAll()
-                }
-                persistFilters()
-            }
+    private func openChat(with listing: ListingItem) {
+        let note = "Hi \(listing.sellerName.split(separator: " ").first.map(String.init) ?? listing.sellerName) — I'm interested in \"\(listing.title)\"."
+        let id = messageStore.startConversation(
+            withSellerName: listing.sellerName,
+            sellerEmail: listing.sellerEmail,
+            listing: listing,
+            openingNote: note
         )
+        selectedListing = nil
+        selectedConversationId = id
+        selectedTab = .messages
     }
 
-    private var filteredListings: [ListingItem] {
-        var items = MockData.listings
-
-        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        if !query.isEmpty {
-            items = items.filter { $0.title.lowercased().contains(query) }
+    private func contactCartSellers() {
+        let items = cart.items(from: listingStore.allListings)
+        var lastId: String?
+        var seen = Set<String>()
+        for item in items {
+            let key = "\(item.sellerEmail.lowercased())|\(item.id)"
+            guard !seen.contains(key) else { continue }
+            seen.insert(key)
+            lastId = messageStore.startConversation(
+                withSellerName: item.sellerName,
+                sellerEmail: item.sellerEmail,
+                listing: item,
+                openingNote: "Hi — I'm interested in \"\(item.title)\" from my cart."
+            )
         }
-
-        items = items.filter { filterCampuses.contains($0.campus) }
-
-        if !filterCategories.isEmpty {
-            items = items.filter { filterCategories.contains($0.category) }
+        if let lastId = lastId {
+            selectedConversationId = lastId
         }
-
-        if !filterTradeTypes.isEmpty {
-            items = items.filter { filterTradeTypes.contains($0.tradeType) }
-        }
-
-        switch selectedSort {
-        case .latestFirst:
-            items.sort { $0.postedAt > $1.postedAt }
-        case .priceLowHigh:
-            items.sort { priceSortValue($0) < priceSortValue($1) }
-        }
-
-        return items
-    }
-
-    private func priceSortValue(_ item: ListingItem) -> Double {
-        if let price = item.price { return price }
-        if item.tradeType == .free { return 0 }
-        return 999_999
+        selectedTab = .messages
     }
 
     private func toggleCampus(_ campus: Campus) {
@@ -205,17 +272,11 @@ struct HomeView: View {
         } else {
             filterCampuses.insert(campus)
         }
-        if filterCampuses.count == 1 {
-            syncSelectedCampusFromFilters()
+        if filterCampuses.count == 1, let only = filterCampuses.first {
+            preferredCampus = only
+            CampusStorage.save(only)
         }
         persistFilters()
-    }
-
-    private func syncSelectedCampusFromFilters() {
-        if filterCampuses.count == 1, let campus = filterCampuses.first {
-            selectedCampus = campus
-            CampusStorage.save(campus)
-        }
     }
 
     private func toggleCategory(_ category: ListingCategory) {
@@ -237,7 +298,7 @@ struct HomeView: View {
     }
 
     private func clearAllFilters() {
-        filterCampuses = [selectedCampus]
+        filterCampuses = [preferredCampus]
         filterCategories.removeAll()
         filterTradeTypes.removeAll()
         persistFilters()
@@ -247,44 +308,5 @@ struct HomeView: View {
         FilterStorage.saveCampuses(filterCampuses)
         FilterStorage.saveCategories(filterCategories)
         FilterStorage.saveTradeTypes(filterTradeTypes)
-    }
-
-    private var placeholderTab: some View {
-        VStack(spacing: 12) {
-            Spacer()
-            Image(systemName: selectedTab.iconName)
-                .font(.system(size: 48))
-                .foregroundColor(SwapTheme.orange)
-            Text(selectedTab.rawValue)
-                .font(.title2)
-                .fontWeight(.semibold)
-            Text("Coming soon")
-                .foregroundColor(.secondary)
-            if selectedTab == .profile {
-                Text("Signed in as \(userEmail)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Button(action: onLogout) {
-                    Text("Log Out")
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 10)
-                        .foregroundColor(.white)
-                        .background(SwapTheme.orange)
-                        .cornerRadius(8)
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.top, 8)
-            }
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(SwapTheme.background)
-    }
-
-    private func handleTabSelect(_ tab: MainTab) {
-        if tab != .home {
-            showFilterPanel = false
-        }
     }
 }

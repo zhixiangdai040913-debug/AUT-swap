@@ -9,6 +9,9 @@ private enum AUTTheme {
 }
 
 struct RootView: View {
+    @StateObject private var cart = CartStore()
+    @StateObject private var listingStore = ListingStore()
+    @StateObject private var messageStore = MessageStore()
     @State private var screen: AppScreen = .welcome
     @State private var userEmail: String = ""
 
@@ -28,10 +31,16 @@ struct RootView: View {
                     }
                 )
             case .home:
-                HomeView(userEmail: userEmail, onLogout: {
-                    userEmail = ""
-                    screen = .welcome
-                })
+                HomeView(
+                    userEmail: userEmail,
+                    cart: cart,
+                    listingStore: listingStore,
+                    messageStore: messageStore,
+                    onLogout: {
+                        userEmail = ""
+                        screen = .welcome
+                    }
+                )
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -40,9 +49,9 @@ struct RootView: View {
 
     private func expandToMainScreen() {
         DispatchQueue.main.async {
-            guard let window = NSApplication.shared.windows.first else { return }
-            guard let mainScreen = NSScreen.main else { return }
-            window.setFrame(mainScreen.visibleFrame, display: true, animate: false)
+            guard let window = NSApp.keyWindow ?? NSApplication.shared.windows.first else { return }
+            guard let screen = window.screen ?? NSScreen.main else { return }
+            window.setFrame(screen.visibleFrame, display: true, animate: false)
         }
     }
 }
@@ -54,7 +63,7 @@ struct WelcomeView: View {
         GeometryReader { geo in
             let logoSize = min(geo.size.width * 0.22, 140)
             ZStack {
-                AUTTheme.orange.edgesIgnoringSafeArea(.all)
+                AUTTheme.orange.ignoresSafeArea()
                 VStack(spacing: 0) {
                     VStack(spacing: 0) {
                         AUTTheme.orangeDark.frame(height: 28)
@@ -62,7 +71,7 @@ struct WelcomeView: View {
                         AUTTheme.orange.frame(height: 18)
                     }.frame(width: geo.size.width)
                     Spacer()
-                }.edgesIgnoringSafeArea(.top)
+                }.ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 28) {
                     Spacer().frame(height: geo.size.height * 0.12)
@@ -105,14 +114,11 @@ struct LoginView: View {
         GeometryReader { geo in
             let logoSize = min(geo.size.width * 0.12, 80)
             ZStack {
-                AUTTheme.orange.edgesIgnoringSafeArea(.all)
-                ScrollView {
-                    loginCard(logoSize: logoSize)
-                        .frame(maxWidth: min(520, geo.size.width * 0.55))
-                        .padding(.vertical, 48)
-                        .frame(maxWidth: .infinity)
-                }
+                AUTTheme.orange.ignoresSafeArea()
+                loginCard(logoSize: logoSize)
+                    .frame(maxWidth: min(480, geo.size.width * 0.5))
             }
+            .frame(width: geo.size.width, height: geo.size.height)
         }
         .alert(isPresented: $showLoginErrorAlert) {
             Alert(title: Text("Login Failed"), message: Text(loginErrorMessage), dismissButton: .default(Text("OK")))
@@ -141,7 +147,6 @@ struct LoginView: View {
                     }.buttonStyle(PlainButtonStyle())
                 }.padding(10).background(Color.white)
                     .overlay(RoundedRectangle(cornerRadius: 2).stroke(Color.gray.opacity(0.4), lineWidth: 1))
-                Text("Student: @autuni.ac.nz  ·  Staff: @aut.ac.nz").font(.caption).foregroundColor(.secondary)
             }.padding(.horizontal, 28).padding(.bottom, 12)
 
             HStack {

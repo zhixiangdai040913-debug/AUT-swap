@@ -56,15 +56,41 @@ enum TradeType: String, CaseIterable, Identifiable, Hashable {
     }
 }
 
-enum SortOption: String, CaseIterable, Identifiable {
-    case latestFirst = "Latest First"
-    case priceLowHigh = "Price: Low - High"
+// MARK: - Feed & sort
+
+enum HomeFeedTab: Hashable, Identifiable {
+    case recommended
+    case category(ListingCategory)
+
+    var id: String {
+        switch self {
+        case .recommended: return "recommended"
+        case .category(let c): return c.rawValue
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .recommended: return "Recommended"
+        case .category(let c): return c.rawValue
+        }
+    }
+
+    static var allTabs: [HomeFeedTab] {
+        [.recommended] + ListingCategory.allCases.map { .category($0) }
+    }
+}
+
+enum CategorySortOption: String, CaseIterable, Identifiable {
+    case price = "Price"
+    case campus = "Campus"
 
     var id: String { rawValue }
 }
 
 enum MainTab: String, CaseIterable, Identifiable {
     case home = "Home"
+    case cart = "Cart"
     case messages = "Messages"
     case post = "Post"
     case profile = "Profile"
@@ -74,6 +100,7 @@ enum MainTab: String, CaseIterable, Identifiable {
     var iconName: String {
         switch self {
         case .home: return "house.fill"
+        case .cart: return "cart.fill"
         case .messages: return "bubble.left.and.bubble.right.fill"
         case .post: return "plus.circle.fill"
         case .profile: return "person.fill"
@@ -84,6 +111,7 @@ enum MainTab: String, CaseIterable, Identifiable {
 struct ListingItem: Identifiable {
     let id: String
     let title: String
+    let description: String
     let price: Double?
     let tradeType: TradeType
     let campus: Campus
@@ -91,54 +119,94 @@ struct ListingItem: Identifiable {
     let trustScore: Double?
     let isNewUser: Bool
     let imageColor: Color
+    let imageSymbol: String
+    let imageNames: [String]
     let postedAt: Date
+    let sellerName: String
+    let sellerEmail: String
+    let sellerListingCount: Int
 }
 
 // MARK: - Mock Data
 
 enum MockData {
-    static let promoBanners: [(title: String, subtitle: String)] = [
-        ("Graduation Season", "Clear your dorm — list grad items today"),
-        ("Free Pickup Day", "Browse free items on South campus")
-    ]
-
     static let listings: [ListingItem] = [
-        // City Campus
-        ListingItem(id: "1", title: "Calculus Early Transcendentals 3rd Ed", price: 45, tradeType: .sell, campus: .city, category: .textbooks, trustScore: 4.8, isNewUser: false, imageColor: Color(red: 0.85, green: 0.9, blue: 0.95), postedAt: Date().addingTimeInterval(-1800)),
-        ListingItem(id: "2", title: "MacBook Pro 13\" 2020 — Swap for iPad", price: nil, tradeType: .swap, campus: .city, category: .electronics, trustScore: nil, isNewUser: true, imageColor: Color(red: 0.75, green: 0.78, blue: 0.82), postedAt: Date().addingTimeInterval(-3600)),
-        ListingItem(id: "3", title: "Monitor 27\" Dell UltraSharp", price: 180, tradeType: .sell, campus: .city, category: .electronics, trustScore: 4.7, isNewUser: false, imageColor: Color(red: 0.8, green: 0.85, blue: 0.88), postedAt: Date().addingTimeInterval(-5400)),
-        ListingItem(id: "4", title: "Statistics for Business Textbook", price: 30, tradeType: .sell, campus: .city, category: .textbooks, trustScore: 4.5, isNewUser: false, imageColor: Color(red: 0.88, green: 0.92, blue: 0.9), postedAt: Date().addingTimeInterval(-7200)),
-        ListingItem(id: "5", title: "Office Chair — Ergonomic", price: 55, tradeType: .sell, campus: .city, category: .furniture, trustScore: 4.6, isNewUser: false, imageColor: Color(red: 0.9, green: 0.87, blue: 0.8), postedAt: Date().addingTimeInterval(-9000)),
-        ListingItem(id: "6", title: "iPad Air 4 + Apple Pencil", price: 420, tradeType: .sell, campus: .city, category: .electronics, trustScore: 4.9, isNewUser: false, imageColor: Color(red: 0.78, green: 0.82, blue: 0.88), postedAt: Date().addingTimeInterval(-10800)),
-        ListingItem(id: "7", title: "Hoodie AUT Branded — L", price: 25, tradeType: .sell, campus: .city, category: .clothing, trustScore: 4.3, isNewUser: false, imageColor: Color(red: 0.82, green: 0.85, blue: 0.9), postedAt: Date().addingTimeInterval(-12600)),
-        ListingItem(id: "8", title: "Marketing Notes Bundle — Free", price: nil, tradeType: .free, campus: .city, category: .textbooks, trustScore: 4.1, isNewUser: false, imageColor: Color(red: 0.86, green: 0.9, blue: 0.86), postedAt: Date().addingTimeInterval(-14400)),
-        ListingItem(id: "9", title: "Bluetooth Speaker JBL", price: nil, tradeType: .swap, campus: .city, category: .electronics, trustScore: 4.4, isNewUser: false, imageColor: Color(red: 0.72, green: 0.76, blue: 0.8), postedAt: Date().addingTimeInterval(-16200)),
-        ListingItem(id: "10", title: "Desk Lamp + Study Organiser", price: 15, tradeType: .sell, campus: .city, category: .other, trustScore: nil, isNewUser: true, imageColor: Color(red: 0.91, green: 0.89, blue: 0.84), postedAt: Date().addingTimeInterval(-18000)),
-
-        // North Campus
-        ListingItem(id: "11", title: "IKEA Desk + Chair Bundle", price: nil, tradeType: .free, campus: .north, category: .furniture, trustScore: 4.5, isNewUser: false, imageColor: Color(red: 0.92, green: 0.88, blue: 0.8), postedAt: Date().addingTimeInterval(-2100)),
-        ListingItem(id: "12", title: "Graduation Gown + Cap", price: 20, tradeType: .sell, campus: .north, category: .graduation, trustScore: 4.2, isNewUser: false, imageColor: Color(red: 0.9, green: 0.92, blue: 0.85), postedAt: Date().addingTimeInterval(-4200)),
-        ListingItem(id: "13", title: "Mini Fridge — Good Condition", price: 60, tradeType: .sell, campus: .north, category: .other, trustScore: 4.6, isNewUser: false, imageColor: Color(red: 0.9, green: 0.88, blue: 0.82), postedAt: Date().addingTimeInterval(-6300)),
-        ListingItem(id: "14", title: "Accounting Principles 4th Ed", price: 38, tradeType: .sell, campus: .north, category: .textbooks, trustScore: 4.7, isNewUser: false, imageColor: Color(red: 0.84, green: 0.88, blue: 0.94), postedAt: Date().addingTimeInterval(-8400)),
-        ListingItem(id: "15", title: "Single Bed Frame + Mattress", price: 80, tradeType: .sell, campus: .north, category: .furniture, trustScore: 4.0, isNewUser: false, imageColor: Color(red: 0.88, green: 0.86, blue: 0.78), postedAt: Date().addingTimeInterval(-10500)),
-        ListingItem(id: "16", title: "Graphic Calculator TI-84", price: nil, tradeType: .swap, campus: .north, category: .electronics, trustScore: 4.8, isNewUser: false, imageColor: Color(red: 0.76, green: 0.8, blue: 0.84), postedAt: Date().addingTimeInterval(-12300)),
-        ListingItem(id: "17", title: "Winter Coat North Face — M", price: 70, tradeType: .sell, campus: .north, category: .clothing, trustScore: 4.5, isNewUser: false, imageColor: Color(red: 0.87, green: 0.84, blue: 0.88), postedAt: Date().addingTimeInterval(-14100)),
-        ListingItem(id: "18", title: "Kitchenware Set — 12 Pieces", price: nil, tradeType: .free, campus: .north, category: .other, trustScore: nil, isNewUser: true, imageColor: Color(red: 0.89, green: 0.91, blue: 0.87), postedAt: Date().addingTimeInterval(-15900)),
-        ListingItem(id: "19", title: "Sofa Bed — Pick Up Only", price: 120, tradeType: .sell, campus: .north, category: .furniture, trustScore: 4.3, isNewUser: false, imageColor: Color(red: 0.93, green: 0.9, blue: 0.82), postedAt: Date().addingTimeInterval(-17700)),
-        ListingItem(id: "20", title: "Graduation Stole + Sash", price: 12, tradeType: .sell, campus: .north, category: .graduation, trustScore: 4.6, isNewUser: false, imageColor: Color(red: 0.91, green: 0.88, blue: 0.9), postedAt: Date().addingTimeInterval(-19500)),
-
-        // South Campus
-        ListingItem(id: "21", title: "Winter Jacket — Size M", price: 35, tradeType: .sell, campus: .south, category: .clothing, trustScore: 4.9, isNewUser: false, imageColor: Color(red: 0.88, green: 0.85, blue: 0.9), postedAt: Date().addingTimeInterval(-2400)),
-        ListingItem(id: "22", title: "Physics Lab Manual — Free", price: nil, tradeType: .free, campus: .south, category: .textbooks, trustScore: nil, isNewUser: true, imageColor: Color(red: 0.86, green: 0.9, blue: 0.86), postedAt: Date().addingTimeInterval(-4800)),
-        ListingItem(id: "23", title: "Wireless Mouse + Keyboard", price: 18, tradeType: .sell, campus: .south, category: .electronics, trustScore: 4.2, isNewUser: false, imageColor: Color(red: 0.79, green: 0.83, blue: 0.87), postedAt: Date().addingTimeInterval(-6600)),
-        ListingItem(id: "24", title: "Biology Campbell 12th Ed", price: 50, tradeType: .sell, campus: .south, category: .textbooks, trustScore: 4.8, isNewUser: false, imageColor: Color(red: 0.87, green: 0.91, blue: 0.88), postedAt: Date().addingTimeInterval(-8700)),
-        ListingItem(id: "25", title: "Bookshelf — Wooden 5 Tier", price: 35, tradeType: .sell, campus: .south, category: .furniture, trustScore: 4.4, isNewUser: false, imageColor: Color(red: 0.9, green: 0.86, blue: 0.79), postedAt: Date().addingTimeInterval(-10200)),
-        ListingItem(id: "26", title: "Nike Running Shoes — US 9", price: nil, tradeType: .swap, campus: .south, category: .clothing, trustScore: 4.6, isNewUser: false, imageColor: Color(red: 0.85, green: 0.88, blue: 0.92), postedAt: Date().addingTimeInterval(-12000)),
-        ListingItem(id: "27", title: "Microwave — 20L Working", price: 40, tradeType: .sell, campus: .south, category: .other, trustScore: 4.1, isNewUser: false, imageColor: Color(red: 0.88, green: 0.9, blue: 0.85), postedAt: Date().addingTimeInterval(-13800)),
-        ListingItem(id: "28", title: "Law Ethics Textbook 2024", price: 42, tradeType: .sell, campus: .south, category: .textbooks, trustScore: 4.7, isNewUser: false, imageColor: Color(red: 0.83, green: 0.87, blue: 0.93), postedAt: Date().addingTimeInterval(-15600)),
-        ListingItem(id: "29", title: "Graduation Photo Frame Set", price: nil, tradeType: .free, campus: .south, category: .graduation, trustScore: 4.0, isNewUser: false, imageColor: Color(red: 0.9, green: 0.93, blue: 0.88), postedAt: Date().addingTimeInterval(-17400)),
-        ListingItem(id: "30", title: "Gaming Headset — RGB", price: 28, tradeType: .sell, campus: .south, category: .electronics, trustScore: nil, isNewUser: true, imageColor: Color(red: 0.74, green: 0.77, blue: 0.85), postedAt: Date().addingTimeInterval(-19200))
+        listing("1", "Calculus Early Transcendentals 3rd Ed", "Clean copy with minimal highlighting. Pick up at City campus library.", 45, .sell, .city, .textbooks, 4.8, false, "book.closed.fill", -1800),
+        listing("2", "MacBook Pro 13\" 2020 — Swap for iPad", "Works perfectly. Looking to swap for iPad Air or similar.", nil, .swap, .city, .electronics, nil, true, "laptopcomputer", -3600),
+        listing("3", "Monitor 27\" Dell UltraSharp", "1080p monitor, includes HDMI cable. Great for study setup.", 180, .sell, .city, .electronics, 4.7, false, "display", -5400),
+        listing("4", "Statistics for Business Textbook", "Required for STATS101. No missing pages.", 30, .sell, .city, .textbooks, 4.5, false, "book.closed.fill", -7200),
+        listing("5", "Office Chair — Ergonomic", "Adjustable height, good lumbar support.", 55, .sell, .city, .furniture, 4.6, false, "chair.fill", -9000),
+        listing("6", "iPad Air 4 + Apple Pencil", "64GB, battery health 92%. Comes with case.", 420, .sell, .city, .electronics, 4.9, false, "laptopcomputer", -10800),
+        listing("7", "Hoodie AUT Branded — L", "Official AUT hoodie, worn twice.", 25, .sell, .city, .clothing, 4.3, false, "tshirt.fill", -12600),
+        listing("8", "Marketing Notes Bundle — Free", "Full semester notes PDF + printed summaries. Free to good home.", nil, .free, .city, .textbooks, 4.1, false, "doc.text.fill", -14400),
+        listing("9", "Bluetooth Speaker JBL", "Portable speaker, swap for study desk lamp or headphones.", nil, .swap, .city, .electronics, 4.4, false, "hifispeaker.fill", -16200),
+        listing("10", "Desk Lamp + Study Organiser", "LED lamp with USB port and pen holder tray.", 15, .sell, .city, .other, nil, true, "lightbulb.fill", -18000),
+        listing("11", "IKEA Desk + Chair Bundle", "Moving out sale — must pick up from North campus dorm.", nil, .free, .north, .furniture, 4.5, false, "chair.fill", -2100),
+        listing("12", "Graduation Gown + Cap", "Size M, dry cleaned after last ceremony.", 20, .sell, .north, .graduation, 4.2, false, "graduationcap.fill", -4200),
+        listing("13", "Mini Fridge — Good Condition", "Compact fridge, perfect for dorm room.", 60, .sell, .north, .other, 4.6, false, "refrigerator.fill", -6300),
+        listing("14", "Accounting Principles 4th Ed", "Latest edition, includes online access code (unused).", 38, .sell, .north, .textbooks, 4.7, false, "books.vertical.fill", -8400),
+        listing("15", "Single Bed Frame + Mattress", "Pick up only. Disassembled for easy transport.", 80, .sell, .north, .furniture, 4.0, false, "bed.double.fill", -10500),
+        listing("16", "Graphic Calculator TI-84", "Fully working. Swap for textbook or backpack.", nil, .swap, .north, .electronics, 4.8, false, "plus.forwardslash.minus", -12300),
+        listing("17", "Winter Coat North Face — M", "Waterproof, great for Auckland winter.", 70, .sell, .north, .clothing, 4.5, false, "cloud.snow.fill", -14100),
+        listing("18", "Kitchenware Set — 12 Pieces", "Pots, pans, utensils — free for new flatmate.", nil, .free, .north, .other, nil, true, "fork.knife", -15900),
+        listing("19", "Sofa Bed — Pick Up Only", "Comfortable sofa bed, minor wear on armrest.", 120, .sell, .north, .furniture, 4.3, false, "sofa.fill", -17700),
+        listing("20", "Graduation Stole + Sash", "Faculty colours included.", 12, .sell, .north, .graduation, 4.6, false, "medal.fill", -19500),
+        listing("21", "Winter Jacket — Size M", "Lightweight puffer jacket, navy blue.", 35, .sell, .south, .clothing, 4.9, false, "cloud.snow.fill", -2400),
+        listing("22", "Physics Lab Manual — Free", "All experiments completed, answers included.", nil, .free, .south, .textbooks, nil, true, "atom", -4800),
+        listing("23", "Wireless Mouse + Keyboard", "Logitech combo, barely used.", 18, .sell, .south, .electronics, 4.2, false, "keyboard.fill", -6600),
+        listing("24", "Biology Campbell 12th Ed", "Heavy textbook — meet at South campus café.", 50, .sell, .south, .textbooks, 4.8, false, "leaf.fill", -8700),
+        listing("25", "Bookshelf — Wooden 5 Tier", "Sturdy bookshelf, fits dorm room corner.", 35, .sell, .south, .furniture, 4.4, false, "books.vertical.fill", -10200),
+        listing("26", "Nike Running Shoes — US 9", "Swap for gym bag or water bottle bundle.", nil, .swap, .south, .clothing, 4.6, false, "figure.walk", -12000),
+        listing("27", "Microwave — 20L Working", "Perfect for quick meals between classes.", 40, .sell, .south, .other, 4.1, false, "flame.fill", -13800),
+        listing("28", "Law Ethics Textbook 2024", "Current edition for LAW501.", 42, .sell, .south, .textbooks, 4.7, false, "building.columns.fill", -15600),
+        listing("29", "Graduation Photo Frame Set", "Set of 3 frames — free giveaway.", nil, .free, .south, .graduation, 4.0, false, "photo.fill", -17400),
+        listing("30", "Gaming Headset — RGB", "USB headset with mic, great for online classes.", 28, .sell, .south, .electronics, nil, true, "headphones", -19200)
     ]
+
+    private static let sellerNames = ["Alex Chen", "Sam Taylor", "Jordan Lee", "Casey Wong", "Riley Ng", "Morgan Park"]
+
+    static func listing(
+        _ id: String,
+        _ title: String,
+        _ description: String,
+        _ price: Double?,
+        _ tradeType: TradeType,
+        _ campus: Campus,
+        _ category: ListingCategory,
+        _ trustScore: Double?,
+        _ isNewUser: Bool,
+        _ imageSymbol: String,
+        _ secondsAgo: TimeInterval
+    ) -> ListingItem {
+        let colors: [Color] = [
+            Color(red: 0.85, green: 0.9, blue: 0.95),
+            Color(red: 0.75, green: 0.78, blue: 0.82),
+            Color(red: 0.9, green: 0.87, blue: 0.8),
+            Color(red: 0.86, green: 0.9, blue: 0.86),
+            Color(red: 0.88, green: 0.85, blue: 0.9)
+        ]
+        let idx = abs(id.hashValue)
+        let seller = sellerNames[idx % sellerNames.count]
+        let num = Int(id) ?? 1
+        return ListingItem(
+            id: id,
+            title: title,
+            description: description,
+            price: price,
+            tradeType: tradeType,
+            campus: campus,
+            category: category,
+            trustScore: trustScore,
+            isNewUser: isNewUser,
+            imageColor: colors[idx % colors.count],
+            imageSymbol: imageSymbol,
+            imageNames: ["listing_\(String(format: "%02d", num)).jpg"],
+            postedAt: Date().addingTimeInterval(secondsAgo),
+            sellerName: seller,
+            sellerEmail: "\(seller.lowercased().replacingOccurrences(of: " ", with: "."))@autuni.ac.nz",
+            sellerListingCount: 2 + (idx % 8)
+        )
+    }
 }
 
 // MARK: - Campus persistence
@@ -173,8 +241,7 @@ enum FilterStorage {
     }
 
     static func saveCategories(_ categories: Set<ListingCategory>) {
-        let raw = categories.map { $0.rawValue }
-        UserDefaults.standard.set(raw, forKey: categoriesKey)
+        UserDefaults.standard.set(categories.map { $0.rawValue }, forKey: categoriesKey)
     }
 
     static func loadTradeTypes() -> Set<TradeType> {
@@ -185,8 +252,7 @@ enum FilterStorage {
     }
 
     static func saveTradeTypes(_ types: Set<TradeType>) {
-        let raw = types.map { $0.rawValue }
-        UserDefaults.standard.set(raw, forKey: tradeTypesKey)
+        UserDefaults.standard.set(types.map { $0.rawValue }, forKey: tradeTypesKey)
     }
 
     static func loadCampuses() -> Set<Campus> {
@@ -200,23 +266,22 @@ enum FilterStorage {
     }
 
     static func saveCampuses(_ campuses: Set<Campus>) {
-        let raw = campuses.map { $0.rawValue }
-        UserDefaults.standard.set(raw, forKey: campusesKey)
+        UserDefaults.standard.set(campuses.map { $0.rawValue }, forKey: campusesKey)
     }
 }
 
 // MARK: - Listing counts (for filter panel)
 
 enum ListingCounts {
-    static func campusCount(_ campus: Campus) -> Int {
-        MockData.listings.filter { $0.campus == campus }.count
+    static func campusCount(_ campus: Campus, in listings: [ListingItem]) -> Int {
+        listings.filter { $0.campus == campus }.count
     }
 
-    static func categoryCount(_ category: ListingCategory, campuses: Set<Campus>) -> Int {
-        MockData.listings.filter { campuses.contains($0.campus) && $0.category == category }.count
+    static func categoryCount(_ category: ListingCategory, campuses: Set<Campus>, in listings: [ListingItem]) -> Int {
+        listings.filter { campuses.contains($0.campus) && $0.category == category }.count
     }
 
-    static func tradeTypeCount(_ type: TradeType, campuses: Set<Campus>) -> Int {
-        MockData.listings.filter { campuses.contains($0.campus) && $0.tradeType == type }.count
+    static func tradeTypeCount(_ type: TradeType, campuses: Set<Campus>, in listings: [ListingItem]) -> Int {
+        listings.filter { campuses.contains($0.campus) && $0.tradeType == type }.count
     }
 }
