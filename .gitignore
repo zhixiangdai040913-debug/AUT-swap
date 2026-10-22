@@ -1,0 +1,56 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Xcode user / local state
+DerivedData/
+**/DerivedData/
+build/
+**/build/
+*.xcuserstate
+**/xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+**/xcshareddata/swiftpm/configuration/
+
+# CocoaPods / Carthage (if used later)
+Pods/
+Carthage/Build/
+
+# Secrets / Firebase config (do not commit keys)
+GoogleService-Info.plist
+**/GoogleService-Info.plist
+*.p12
+*.mobileprovision
+.env
+.env.*
+credentials.json
+**/Secrets/
+
+# Python / local tooling
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+*.swp
+*~
+
+# Nested / legacy project folders (separate git repos)
+AUT Swap App/AUT swap/
+

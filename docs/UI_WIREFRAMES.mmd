@@ -1,0 +1,66 @@
+flowchart LR
+  subgraph LoginScreen["LoginView"]
+    direction TB
+    L1[AUT logo + cityscape header]
+    L2[University Swap title + tagline]
+    L3[Email field]
+    L4[Password field + show/hide]
+    L5[Log In button - orange]
+    L6[Forgot Password / Sign Up]
+    L7[Demo footer when sample mode]
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
+  end
+
+  subgraph HomeScreen["HomeView"]
+    direction TB
+    H1[Logo + University Swap + demo label]
+    H2[Search + Filters button]
+    H3[Campus chips]
+    H4[Giveaway banner]
+    H5[Category icons row]
+    H6[Sort tabs]
+    H7[2-column ListingCard grid]
+    H1 --> H2 --> H3 --> H4 --> H5 --> H6 --> H7
+  end
+
+  subgraph Card["ListingCard"]
+    direction TB
+    C1[4:3 image + trade-type badge]
+    C2[Title 2 lines]
+    C3[Price / Free / Open to swap]
+    C4[Campus + distance]
+    C5[Heart + like count]
+    C1 --> C2 --> C3 --> C4 --> C5
+  end
+
+  subgraph DetailScreen["ListingDetailView"]
+    direction TB
+    D1[Photo gallery + badge]
+    D2[Title / price / condition / campus]
+    D3[Seller row - trust + Chat]
+    D4[Description / Pickup / Payment]
+    D5[Bottom Chat CTA]
+    D6[Toolbar heart / share / Report]
+    D1 --> D2 --> D3 --> D4 --> D5
+    D6 --- D1
+  end
+
+  subgraph ProfileScreen["ProfileView"]
+    direction TB
+    P1[Logo + Settings gear]
+    P2[Avatar / name / verified / level]
+    P3[Trustworthiness score card]
+    P4[Menu: Listings Favorites Transactions Reviews Settings Messages]
+    P5[Log Out - red]
+    P1 --> P2 --> P3 --> P4 --> P5
+  end
+
+  subgraph PublishScreen["CreateListingView"]
+    direction TB
+    X1[Post Item nav]
+    X2[1. Add Photos]
+    X3[2. Item Information]
+    X4[Title Category TradeType Price Campus Description]
+    X5[Next / Post confirm]
+    X1 --> X2 --> X3 --> X4 --> X5
+  end

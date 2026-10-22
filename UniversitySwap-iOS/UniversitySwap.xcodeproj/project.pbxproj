@@ -1,0 +1,753 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9D2E059930894399006BDAA3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9D2E059830894399006BDAA3 /* FirebaseAuth */; };
+		9D2E059B30894399006BDAA3 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9D2E059A30894399006BDAA3 /* FirebaseFirestore */; };
+		9D2E059D30894399006BDAA3 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9D2E059C30894399006BDAA3 /* FirebaseStorage */; };
+		9D2E059F3089449D006BDAA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2E059E3089449D006BDAA3 /* AppDelegate.swift */; };
+		9D2E05A030894659006BDAA3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D2E059330893D13006BDAA3 /* GoogleService-Info.plist */; };
+		B00000000000000000000001 /* UniversitySwapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000001 /* UniversitySwapApp.swift */; };
+		B00000000000000000000002 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000002 /* AppState.swift */; };
+		B00000000000000000000003 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000003 /* RootView.swift */; };
+		B00000000000000000000004 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000004 /* MainTabView.swift */; };
+		B00000000000000000000005 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000005 /* AppRoute.swift */; };
+		B00000000000000000000006 /* PlaceholderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000006 /* PlaceholderContent.swift */; };
+		B00000000000000000000007 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000007 /* LoginView.swift */; };
+		B00000000000000000000008 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000008 /* LoginViewModel.swift */; };
+		B00000000000000000000009 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000009 /* HomeView.swift */; };
+		B00000000000000000000010 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000010 /* HomeViewModel.swift */; };
+		B00000000000000000000011 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000011 /* FiltersView.swift */; };
+		B00000000000000000000012 /* FiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000012 /* FiltersViewModel.swift */; };
+		B00000000000000000000013 /* ListingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000013 /* ListingDetailView.swift */; };
+		B00000000000000000000014 /* ListingDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000014 /* ListingDetailViewModel.swift */; };
+		B00000000000000000000015 /* CreateListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000015 /* CreateListingView.swift */; };
+		B00000000000000000000016 /* CreateListingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000016 /* CreateListingViewModel.swift */; };
+		B00000000000000000000017 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000017 /* MessagesView.swift */; };
+		B00000000000000000000018 /* MessagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000018 /* MessagesViewModel.swift */; };
+		B00000000000000000000019 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000019 /* ChatView.swift */; };
+		B00000000000000000000020 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000020 /* ChatViewModel.swift */; };
+		B00000000000000000000021 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000021 /* ProfileView.swift */; };
+		B00000000000000000000022 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000022 /* ProfileViewModel.swift */; };
+		B00000000000000000000023 /* TrustworthinessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000023 /* TrustworthinessView.swift */; };
+		B00000000000000000000024 /* TrustworthinessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000024 /* TrustworthinessViewModel.swift */; };
+		B00000000000000000000025 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000025 /* Assets.xcassets */; };
+		B00000000000000000000027 /* LoginHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000027 /* LoginHeaderView.swift */; };
+		B00000000000000000000028 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000028 /* AppTheme.swift */; };
+		B00000000000000000000029 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000029 /* Listing.swift */; };
+		B00000000000000000000030 /* MockListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000030 /* MockListings.swift */; };
+		B00000000000000000000031 /* ListingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000031 /* ListingCard.swift */; };
+		B00000000000000000000032 /* GiveawayBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000032 /* GiveawayBannerView.swift */; };
+		B00000000000000000000033 /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000033 /* MainTabBar.swift */; };
+		B00000000000000000000034 /* ListingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000034 /* ListingStyle.swift */; };
+		B00000000000000000000035 /* ListingFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000035 /* ListingFilters.swift */; };
+		B00000000000000000000036 /* Seller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000036 /* Seller.swift */; };
+		B00000000000000000000037 /* ListingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000037 /* ListingStore.swift */; };
+		B00000000000000000000038 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000038 /* Conversation.swift */; };
+		B00000000000000000000039 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000039 /* ChatMessage.swift */; };
+		B00000000000000000000040 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000040 /* ChatStore.swift */; };
+		B00000000000000000000041 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000041 /* Review.swift */; };
+		B00000000000000000000042 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000042 /* SettingsView.swift */; };
+		B00000000000000000000043 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000043 /* CategoriesView.swift */; };
+		B00000000000000000000044 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000044 /* RegisterView.swift */; };
+		B00000000000000000000045 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000045 /* UserProfile.swift */; };
+		B00000000000000000000046 /* ListingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000046 /* ListingStatus.swift */; };
+		B00000000000000000000047 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000047 /* AuthService.swift */; };
+		B00000000000000000000048 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000048 /* UserRepository.swift */; };
+		B00000000000000000000049 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000049 /* StorageService.swift */; };
+		B00000000000000000000050 /* ListingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000050 /* ListingRepository.swift */; };
+		B00000000000000000000051 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000051 /* AppConfig.swift */; };
+		B00000000000000000000052 /* FavoritesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000052 /* FavoritesRepository.swift */; };
+		B00000000000000000000053 /* FavoritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000053 /* FavoritesStore.swift */; };
+		B00000000000000000000054 /* FavoriteHeartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000054 /* FavoriteHeartButton.swift */; };
+		B00000000000000000000055 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000055 /* FavoritesView.swift */; };
+		B00000000000000000000056 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000056 /* FavoritesViewModel.swift */; };
+		B00000000000000000000057 /* MyListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000057 /* MyListingsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9D2E059330893D13006BDAA3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "UniversitySwap/Resources/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		9D2E059E3089449D006BDAA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F00000000000000000000001 /* UniversitySwapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversitySwapApp.swift; sourceTree = "<group>"; };
+		F00000000000000000000002 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		F00000000000000000000003 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F00000000000000000000004 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		F00000000000000000000005 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
+		F00000000000000000000006 /* PlaceholderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderContent.swift; sourceTree = "<group>"; };
+		F00000000000000000000007 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		F00000000000000000000008 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000009 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F00000000000000000000010 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000011 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
+		F00000000000000000000012 /* FiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000013 /* ListingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailView.swift; sourceTree = "<group>"; };
+		F00000000000000000000014 /* ListingDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000015 /* CreateListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingView.swift; sourceTree = "<group>"; };
+		F00000000000000000000016 /* CreateListingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListingViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000017 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		F00000000000000000000018 /* MessagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000019 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		F00000000000000000000020 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000021 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F00000000000000000000022 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000023 /* TrustworthinessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustworthinessView.swift; sourceTree = "<group>"; };
+		F00000000000000000000024 /* TrustworthinessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustworthinessViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000025 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F00000000000000000000026 /* UniversitySwap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversitySwap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00000000000000000000027 /* LoginHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHeaderView.swift; sourceTree = "<group>"; };
+		F00000000000000000000028 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		F00000000000000000000029 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		F00000000000000000000030 /* MockListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListings.swift; sourceTree = "<group>"; };
+		F00000000000000000000031 /* ListingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCard.swift; sourceTree = "<group>"; };
+		F00000000000000000000032 /* GiveawayBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayBannerView.swift; sourceTree = "<group>"; };
+		F00000000000000000000033 /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
+		F00000000000000000000034 /* ListingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingStyle.swift; sourceTree = "<group>"; };
+		F00000000000000000000035 /* ListingFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingFilters.swift; sourceTree = "<group>"; };
+		F00000000000000000000036 /* Seller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seller.swift; sourceTree = "<group>"; };
+		F00000000000000000000037 /* ListingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingStore.swift; sourceTree = "<group>"; };
+		F00000000000000000000038 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		F00000000000000000000039 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		F00000000000000000000040 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
+		F00000000000000000000041 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		F00000000000000000000042 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F00000000000000000000043 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
+		F00000000000000000000044 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		F00000000000000000000045 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		F00000000000000000000046 /* ListingStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingStatus.swift; sourceTree = "<group>"; };
+		F00000000000000000000047 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		F00000000000000000000048 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		F00000000000000000000049 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		F00000000000000000000050 /* ListingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRepository.swift; sourceTree = "<group>"; };
+		F00000000000000000000051 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		F00000000000000000000052 /* FavoritesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRepository.swift; sourceTree = "<group>"; };
+		F00000000000000000000053 /* FavoritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesStore.swift; sourceTree = "<group>"; };
+		F00000000000000000000054 /* FavoriteHeartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeartButton.swift; sourceTree = "<group>"; };
+		F00000000000000000000055 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		F00000000000000000000056 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000057 /* MyListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		K00000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D2E059D30894399006BDAA3 /* FirebaseStorage in Frameworks */,
+				9D2E059930894399006BDAA3 /* FirebaseAuth in Frameworks */,
+				9D2E059B30894399006BDAA3 /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G00000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				9D2E059E3089449D006BDAA3 /* AppDelegate.swift */,
+				9D2E059330893D13006BDAA3 /* GoogleService-Info.plist */,
+				G00000000000000000000002 /* UniversitySwap */,
+				G00000000000000000000018 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		G00000000000000000000002 /* UniversitySwap */ = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000003 /* App */,
+				G00000000000000000000004 /* Navigation */,
+				G00000000000000000000020 /* Models */,
+				G00000000000000000000021 /* Services */,
+				G00000000000000000000007 /* Features */,
+				G00000000000000000000005 /* Shared */,
+				G00000000000000000000017 /* Resources */,
+			);
+			path = UniversitySwap;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000001 /* UniversitySwapApp.swift */,
+				F00000000000000000000002 /* AppState.swift */,
+				F00000000000000000000051 /* AppConfig.swift */,
+				F00000000000000000000003 /* RootView.swift */,
+				F00000000000000000000004 /* MainTabView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000004 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000005 /* AppRoute.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000005 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000006 /* Components */,
+				G00000000000000000000019 /* Theme */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000006 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000006 /* PlaceholderContent.swift */,
+				F00000000000000000000033 /* MainTabBar.swift */,
+				F00000000000000000000054 /* FavoriteHeartButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000007 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000008 /* Login */,
+				G00000000000000000000009 /* Home */,
+				G00000000000000000000022 /* Categories */,
+				G00000000000000000000010 /* Filters */,
+				G00000000000000000000011 /* ListingDetail */,
+				G00000000000000000000012 /* CreateListing */,
+				G00000000000000000000013 /* Messages */,
+				G00000000000000000000014 /* Chat */,
+				G00000000000000000000023 /* Favorites */,
+				G00000000000000000000015 /* Profile */,
+				G00000000000000000000016 /* Trustworthiness */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000008 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000007 /* LoginView.swift */,
+				F00000000000000000000044 /* RegisterView.swift */,
+				F00000000000000000000008 /* LoginViewModel.swift */,
+				F00000000000000000000027 /* LoginHeaderView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000009 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000009 /* HomeView.swift */,
+				F00000000000000000000010 /* HomeViewModel.swift */,
+				F00000000000000000000031 /* ListingCard.swift */,
+				F00000000000000000000032 /* GiveawayBannerView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000022 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000043 /* CategoriesView.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000010 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000011 /* FiltersView.swift */,
+				F00000000000000000000012 /* FiltersViewModel.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000011 /* ListingDetail */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000013 /* ListingDetailView.swift */,
+				F00000000000000000000014 /* ListingDetailViewModel.swift */,
+			);
+			path = ListingDetail;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000012 /* CreateListing */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000015 /* CreateListingView.swift */,
+				F00000000000000000000016 /* CreateListingViewModel.swift */,
+			);
+			path = CreateListing;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000013 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000017 /* MessagesView.swift */,
+				F00000000000000000000018 /* MessagesViewModel.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000014 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000019 /* ChatView.swift */,
+				F00000000000000000000020 /* ChatViewModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000023 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000055 /* FavoritesView.swift */,
+				F00000000000000000000056 /* FavoritesViewModel.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000015 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000021 /* ProfileView.swift */,
+				F00000000000000000000057 /* MyListingsView.swift */,
+				F00000000000000000000042 /* SettingsView.swift */,
+				F00000000000000000000022 /* ProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000016 /* Trustworthiness */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000023 /* TrustworthinessView.swift */,
+				F00000000000000000000024 /* TrustworthinessViewModel.swift */,
+			);
+			path = Trustworthiness;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000017 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000025 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000018 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000026 /* UniversitySwap.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000019 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000028 /* AppTheme.swift */,
+				F00000000000000000000034 /* ListingStyle.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000020 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000029 /* Listing.swift */,
+				F00000000000000000000030 /* MockListings.swift */,
+				F00000000000000000000035 /* ListingFilters.swift */,
+				F00000000000000000000036 /* Seller.swift */,
+				F00000000000000000000045 /* UserProfile.swift */,
+				F00000000000000000000046 /* ListingStatus.swift */,
+				F00000000000000000000038 /* Conversation.swift */,
+				F00000000000000000000039 /* ChatMessage.swift */,
+				F00000000000000000000041 /* Review.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000021 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000037 /* ListingStore.swift */,
+				F00000000000000000000040 /* ChatStore.swift */,
+				F00000000000000000000047 /* AuthService.swift */,
+				F00000000000000000000048 /* UserRepository.swift */,
+				F00000000000000000000049 /* StorageService.swift */,
+				F00000000000000000000050 /* ListingRepository.swift */,
+				F00000000000000000000052 /* FavoritesRepository.swift */,
+				F00000000000000000000053 /* FavoritesStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T00000000000000000000001 /* UniversitySwap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C00000000000000000000002 /* Build configuration list for PBXNativeTarget "UniversitySwap" */;
+			buildPhases = (
+				S00000000000000000000001 /* Sources */,
+				K00000000000000000000001 /* Frameworks */,
+				R00000000000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UniversitySwap;
+			packageProductDependencies = (
+				9D2E059830894399006BDAA3 /* FirebaseAuth */,
+				9D2E059A30894399006BDAA3 /* FirebaseFirestore */,
+				9D2E059C30894399006BDAA3 /* FirebaseStorage */,
+			);
+			productName = UniversitySwap;
+			productReference = F00000000000000000000026 /* UniversitySwap.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		P00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					T00000000000000000000001 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = C00000000000000000000001 /* Build configuration list for PBXProject "UniversitySwap" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = G00000000000000000000001;
+			packageReferences = (
+				9D2E059530894399006BDAA3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = G00000000000000000000018 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T00000000000000000000001 /* UniversitySwap */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		R00000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000025 /* Assets.xcassets in Resources */,
+				9D2E05A030894659006BDAA3 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		S00000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000001 /* UniversitySwapApp.swift in Sources */,
+				B00000000000000000000002 /* AppState.swift in Sources */,
+				B00000000000000000000003 /* RootView.swift in Sources */,
+				B00000000000000000000004 /* MainTabView.swift in Sources */,
+				9D2E059F3089449D006BDAA3 /* AppDelegate.swift in Sources */,
+				B00000000000000000000005 /* AppRoute.swift in Sources */,
+				B00000000000000000000006 /* PlaceholderContent.swift in Sources */,
+				B00000000000000000000007 /* LoginView.swift in Sources */,
+				B00000000000000000000008 /* LoginViewModel.swift in Sources */,
+				B00000000000000000000009 /* HomeView.swift in Sources */,
+				B00000000000000000000010 /* HomeViewModel.swift in Sources */,
+				B00000000000000000000011 /* FiltersView.swift in Sources */,
+				B00000000000000000000012 /* FiltersViewModel.swift in Sources */,
+				B00000000000000000000013 /* ListingDetailView.swift in Sources */,
+				B00000000000000000000014 /* ListingDetailViewModel.swift in Sources */,
+				B00000000000000000000015 /* CreateListingView.swift in Sources */,
+				B00000000000000000000016 /* CreateListingViewModel.swift in Sources */,
+				B00000000000000000000017 /* MessagesView.swift in Sources */,
+				B00000000000000000000018 /* MessagesViewModel.swift in Sources */,
+				B00000000000000000000019 /* ChatView.swift in Sources */,
+				B00000000000000000000020 /* ChatViewModel.swift in Sources */,
+				B00000000000000000000021 /* ProfileView.swift in Sources */,
+				B00000000000000000000022 /* ProfileViewModel.swift in Sources */,
+				B00000000000000000000023 /* TrustworthinessView.swift in Sources */,
+				B00000000000000000000024 /* TrustworthinessViewModel.swift in Sources */,
+				B00000000000000000000027 /* LoginHeaderView.swift in Sources */,
+				B00000000000000000000028 /* AppTheme.swift in Sources */,
+				B00000000000000000000029 /* Listing.swift in Sources */,
+				B00000000000000000000030 /* MockListings.swift in Sources */,
+				B00000000000000000000031 /* ListingCard.swift in Sources */,
+				B00000000000000000000032 /* GiveawayBannerView.swift in Sources */,
+				B00000000000000000000033 /* MainTabBar.swift in Sources */,
+				B00000000000000000000034 /* ListingStyle.swift in Sources */,
+				B00000000000000000000035 /* ListingFilters.swift in Sources */,
+				B00000000000000000000036 /* Seller.swift in Sources */,
+				B00000000000000000000037 /* ListingStore.swift in Sources */,
+				B00000000000000000000038 /* Conversation.swift in Sources */,
+				B00000000000000000000039 /* ChatMessage.swift in Sources */,
+				B00000000000000000000040 /* ChatStore.swift in Sources */,
+				B00000000000000000000041 /* Review.swift in Sources */,
+				B00000000000000000000042 /* SettingsView.swift in Sources */,
+				B00000000000000000000043 /* CategoriesView.swift in Sources */,
+				B00000000000000000000044 /* RegisterView.swift in Sources */,
+				B00000000000000000000045 /* UserProfile.swift in Sources */,
+				B00000000000000000000046 /* ListingStatus.swift in Sources */,
+				B00000000000000000000047 /* AuthService.swift in Sources */,
+				B00000000000000000000048 /* UserRepository.swift in Sources */,
+				B00000000000000000000049 /* StorageService.swift in Sources */,
+				B00000000000000000000050 /* ListingRepository.swift in Sources */,
+				B00000000000000000000051 /* AppConfig.swift in Sources */,
+				B00000000000000000000052 /* FavoritesRepository.swift in Sources */,
+				B00000000000000000000053 /* FavoritesStore.swift in Sources */,
+				B00000000000000000000054 /* FavoriteHeartButton.swift in Sources */,
+				B00000000000000000000055 /* FavoritesView.swift in Sources */,
+				B00000000000000000000056 /* FavoritesViewModel.swift in Sources */,
+				B00000000000000000000057 /* MyListingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D00000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D00000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D00000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "University Swap";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinghe.AUTswap.UniversitySwap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D00000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "University Swap";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinghe.AUTswap.UniversitySwap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C00000000000000000000001 /* Build configuration list for PBXProject "UniversitySwap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00000000000000000000001 /* Debug */,
+				D00000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C00000000000000000000002 /* Build configuration list for PBXNativeTarget "UniversitySwap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00000000000000000000003 /* Debug */,
+				D00000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D2E059530894399006BDAA3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.24.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D2E059830894399006BDAA3 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D2E059530894399006BDAA3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		9D2E059A30894399006BDAA3 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D2E059530894399006BDAA3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		9D2E059C30894399006BDAA3 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D2E059530894399006BDAA3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = P00000000000000000000001 /* Project object */;
+}

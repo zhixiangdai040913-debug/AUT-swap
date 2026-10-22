@@ -1,0 +1,195 @@
+rules_version = '2';
+
+// PROPOSED — not deployed. Review and test before publishing to production.
+// Matches UniversitySwap collections: users/{uid}, listings/{listingId}
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function listingOwner() {
+      return isSignedIn()
+        && resource.data.sellerUserId == request.auth.uid;
+    }
+
+    function incomingOwner() {
+      return isSignedIn()
+        && request.resource.data.sellerUserId == request.auth.uid;
+    }
+
+    function isAutEmail(email) {
+      return email is string
+        && (
+          email.matches('.*@autuni\\.ac\\.nz$')
+          || email.matches('.*@aut\\.ac\\.nz$')
+        );
+    }
+
+    function validCampus(value) {
+      return value in ['City', 'North', 'South']
+        || value == null;
+    }
+
+    function validCategory(value) {
+      return value in [
+        'Textbooks', 'Furniture', 'Electronics',
+        'Clothing', 'Graduation', 'Other'
+      ];
+    }
+
+    function validListingType(value) {
+      return value in ['free', 'swap', 'sale'];
+    }
+
+    function validStatus(value) {
+      return value in [
+        'active', 'sold', 'swapped', 'given_away', 'archived'
+      ];
+    }
+
+    function validImageURLs(urls) {
+      return urls is list
+        && urls.size() <= 5
+        && urls.size() >= 0;
+      // Element type checks for list items are limited in Rules;
+      // app must still send string HTTPS URLs only.
+    }
+
+    function validPrice(data) {
+      return !('price' in data)
+        || data.price == null
+        || (data.price is number && data.price >= 0 && data.price <= 100000);
+    }
+
+    function requiredListingStrings(data) {
+      return data.title is string
+        && data.title.size() > 0
+        && data.title.size() <= 120
+        && data.description is string
+        && data.description.size() > 0
+        && data.description.size() <= 4000
+        && data.condition is string
+        && data.condition.size() > 0
+        && data.condition.size() <= 80
+        && data.sellerName is string
+        && data.sellerName.size() > 0
+        && data.sellerName.size() <= 80
+        && data.pickupNote is string
+        && data.pickupNote.size() <= 200;
+    }
+
+    function validListingCreate() {
+      let d = request.resource.data;
+      return incomingOwner()
+        && requiredListingStrings(d)
+        && d.sellerUserId is string
+        && d.sellerIsVerified is bool
+        && d.sellerRating is number
+        && d.sellerReviewCount is int
+        && validCategory(d.category)
+        && validListingType(d.listingType)
+        && d.campus in ['City', 'North', 'South']
+        && validPrice(d)
+        && validImageURLs(d.imageURLs)
+        && d.status == 'active'
+        && d.likeCount == 0
+        && d.createdAt == request.time
+        && d.updatedAt == request.time;
+    }
+
+    // Updates: owner only; sellerUserId immutable; validate shape.
+    function validListingUpdate() {
+      let d = request.resource.data;
+      let prior = resource.data;
+      return listingOwner()
+        && d.sellerUserId == prior.sellerUserId
+        && requiredListingStrings(d)
+        && validCategory(d.category)
+        && validListingType(d.listingType)
+        && d.campus in ['City', 'North', 'South']
+        && validPrice(d)
+        && validImageURLs(d.imageURLs)
+        && validStatus(d.status)
+        && d.likeCount is int
+        && d.likeCount >= 0
+        && d.updatedAt == request.time
+        && d.createdAt == prior.createdAt;
+    }
+
+    // ---- users/{userId} ----
+    // Full profile (includes email) is owner-only.
+    // Public seller display fields are denormalized onto listings.
+    match /users/{userId} {
+      allow read: if isSelf(userId);
+
+      allow create: if isSelf(userId)
+        && request.resource.data.keys().hasOnly([
+          'email', 'displayName', 'accountType', 'campus',
+          'createdAt', 'updatedAt'
+        ])
+        && isAutEmail(request.resource.data.email)
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 80
+        && request.resource.data.accountType in ['student', 'staff']
+        && validCampus(request.resource.data.campus)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+
+      allow update: if isSelf(userId)
+        && request.resource.data.keys().hasOnly([
+          'email', 'displayName', 'accountType', 'campus',
+          'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.accountType == resource.data.accountType
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() > 0
+        && request.resource.data.displayName.size() <= 80
+        && validCampus(request.resource.data.campus)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if false;
+
+      // Favorites (收藏): users/{uid}/favorites/{listingId}
+      // Document ID must equal listingId; owner-only. PROPOSED — test before Publish.
+      match /favorites/{listingId} {
+        allow read: if isSelf(userId);
+
+        allow create: if isSelf(userId)
+          && request.resource.data.keys().hasOnly(['listingId', 'createdAt'])
+          && request.resource.data.listingId == listingId
+          && request.resource.data.listingId is string
+          && request.resource.data.listingId.size() > 0
+          && request.resource.data.listingId.size() <= 128
+          && request.resource.data.createdAt == request.time;
+
+        allow update: if false;
+
+        allow delete: if isSelf(userId);
+      }
+    }
+
+    // ---- listings/{listingId} ----
+    match /listings/{listingId} {
+      // App home requires login; do not open world-writable/world-readable.
+      allow read: if isSignedIn();
+
+      allow create: if validListingCreate();
+
+      allow update: if validListingUpdate();
+
+      allow delete: if listingOwner();
+    }
+
+    // Deny everything else by default (no catch-all allow).
+  }
+}

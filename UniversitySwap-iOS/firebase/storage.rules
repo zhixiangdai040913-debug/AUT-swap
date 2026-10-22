@@ -1,0 +1,45 @@
+rules_version = '2';
+
+// PROPOSED — not deployed. Review and test before publishing to production.
+// Matches StorageService path: listings/{sellerId}/{listingId}/{index}.jpg
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAllowedImage() {
+      return request.resource.contentType.matches('image/(jpeg|jpg|png|webp)')
+        && request.resource.size > 0
+        && request.resource.size < 5 * 1024 * 1024; // 5 MB
+    }
+
+    function isAllowedFileName(fileName) {
+      // App uploads 0.jpg, 1.jpg, … — keep pattern tight.
+      return fileName.matches('^[0-4]\\.jpg$')
+        || fileName.matches('^[0-4]\\.(jpeg|png|webp)$');
+    }
+
+    match /listings/{userId}/{listingId}/{fileName} {
+      // Logged-in marketplace users can load listing photos.
+      allow read: if isSignedIn();
+
+      allow create, update: if isOwner(userId)
+        && listingId.size() > 0
+        && listingId.size() <= 128
+        && isAllowedFileName(fileName)
+        && isAllowedImage();
+
+      // Owner can remove their own uploads (e.g. before republish).
+      allow delete: if isOwner(userId);
+    }
+
+    // No other paths are readable/writable.
+  }
+}

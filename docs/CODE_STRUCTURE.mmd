@@ -1,0 +1,56 @@
+flowchart TB
+  Root["UniversitySwap-iOS"]
+
+  Root --> AD["AppDelegate.swift\nFirebaseApp.configure"]
+  Root --> US["UniversitySwap/"]
+  Root --> FB["firebase/\nproposed rules"]
+  Root --> XP["UniversitySwap.xcodeproj"]
+
+  US --> App["App/"]
+  US --> Feat["Features/"]
+  US --> Models["Models/"]
+  US --> Nav["Navigation/"]
+  US --> Svc["Services/"]
+  US --> Shared["Shared/"]
+  US --> Res["Resources/"]
+
+  App --> AppFiles["UniversitySwapApp\nRootView · MainTabView\nAppState · AppConfig"]
+
+  Feat --> FLogin["Login/"]
+  Feat --> FHome["Home/"]
+  Feat --> FCat["Categories/"]
+  Feat --> FFilt["Filters/"]
+  Feat --> FDet["ListingDetail/"]
+  Feat --> FCreate["CreateListing/"]
+  Feat --> FMsg["Messages/"]
+  Feat --> FChat["Chat/"]
+  Feat --> FFav["Favorites/"]
+  Feat --> FProf["Profile/"]
+  Feat --> FTrust["Trustworthiness/"]
+
+  FLogin --> FLoginFiles["LoginView · RegisterView\nLoginViewModel · LoginHeaderView"]
+  FHome --> FHomeFiles["HomeView · HomeViewModel\nListingCard · GiveawayBannerView"]
+  FCat --> FCatFiles["CategoriesView"]
+  FFilt --> FFiltFiles["FiltersView · FiltersViewModel"]
+  FDet --> FDetFiles["ListingDetailView · ViewModel"]
+  FCreate --> FCreateFiles["CreateListingView · ViewModel"]
+  FMsg --> FMsgFiles["MessagesView · ViewModel"]
+  FChat --> FChatFiles["ChatView · ChatViewModel"]
+  FFav --> FFavFiles["FavoritesView · ViewModel"]
+  FProf --> FProfFiles["ProfileView · ProfileViewModel\nMyListingsView · SettingsView"]
+  FTrust --> FTrustFiles["TrustworthinessView · ViewModel"]
+
+  Models --> ModelFiles["Listing · Seller · UserProfile\nConversation · ChatMessage · Review\nMockListings · ListingFilters · ListingStatus"]
+
+  Nav --> NavFiles["AppRoute.swift"]
+
+  Svc --> SvcFiles["AuthService · UserRepository\nListingStore · ListingRepository\nFavoritesStore · FavoritesRepository\nStorageService · ChatStore"]
+
+  Shared --> Comp["Components/"]
+  Shared --> Theme["Theme/"]
+  Comp --> CompFiles["MainTabBar\nFavoriteHeartButton\nPlaceholderContent"]
+  Theme --> ThemeFiles["AppTheme · ListingStyle"]
+
+  Res --> ResFiles["Assets.xcassets\nGoogleService-Info.plist"]
+
+  FB --> FBFiles["firestore.rules\nstorage.rules\nREADME-rules.md"]
