@@ -54,3 +54,10 @@ __pycache__/
 # Nested / legacy project folders (separate git repos)
 AUT Swap App/AUT swap/
 
+# Project reports / documentation artifacts (keep out of repo)
+*.xlsx
+*.docx
+*.pdf
+docs/
+Documentation/
+
